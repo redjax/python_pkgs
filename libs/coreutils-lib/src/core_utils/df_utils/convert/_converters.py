@@ -8,8 +8,8 @@ import pandas as pd
 
 log = logging.getLogger(__name__)
 
-from ..io.save import save_csv, save_json, save_pq
 from ..io.load import load_csv, load_json, load_pq, load_pqs_to_df, load_sql
+from ..io.save import save_csv, save_json, save_pq
 
 __all__ = [
     "convert_csv_to_pq",
