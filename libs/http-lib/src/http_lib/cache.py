@@ -7,8 +7,16 @@ import typing as t
 import hishel
 import httpx
 
+__all__ = [
+    "get_cache_transport",
+    "get_sqlite_cache_storage",
+    "get_file_cache_storage",
+    "get_cache_controller",
+]
+
+
 def get_sqlite_cache_storage(
-    cache_db_path: str = ".cache/http/hishel.sqlite3", ttl=900
+    cache_db_path: str | None = None, ttl=900
 ) -> hishel.SQLiteStorage:
     """Get a hishel.SQLiteStorage cache.
 
@@ -20,6 +28,9 @@ def get_sqlite_cache_storage(
         (hishel.SQLiteStorage): An initialized SQLiteStorage object.
 
     """
+    if not cache_db_path:
+        return
+
     ## Ensure database filename ends with a valid SQLite file extension
     if Path(cache_db_path).suffix not in [".sqlite", ".sqlite3", ".db"]:
         cache_db_path = f"{cache_db_path}/.sqlite3"
@@ -38,7 +49,7 @@ def get_sqlite_cache_storage(
 
 
 def get_file_cache_storage(
-    base_path: str = ".cache/http/hishel", ttl: int = 900, check_ttl_every: float = 60
+    base_path: str | None = None, ttl: int = 900, check_ttl_every: float = 60
 ) -> hishel.FileStorage:
     """Get a hishel.FileStorage cache.
 
@@ -51,6 +62,9 @@ def get_file_cache_storage(
         (hishel.FileStorage): An initialized FileStorage object.
 
     """
+    if not base_path:
+        return
+
     ## Ensure cache directory exists
     if not Path(base_path).exists():
         Path(base_path).mkdir(parents=True, exist_ok=True)
