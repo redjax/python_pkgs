@@ -3,15 +3,9 @@ name = "depends-lib"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-authors = [
-    { name = "redjax", email = "no@none.com" }
-]
+authors = [{ name = "redjax", email = "no@none.com" }]
 requires-python = ">=3.11"
-dependencies = [
-    "coreutils-lib",
-    "database-lib",
-    "settings-lib",
-]
+dependencies = []
 
 [project.scripts]
 depends-lib = "depends_lib:main"

@@ -4,9 +4,7 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = [
-    "pandas-lib",
-]
+dependencies = []
 
 [build-system]
 requires = ["hatchling"]
@@ -20,12 +18,9 @@ members = ["libs/*"]
 
 [tool.uv.sources]
 coreutils-lib = { workspace = true }
-database-lib = { workspace = true }
 depends-lib = { workspace = true }
 http-lib = { workspace = true }
-settings-lib = { workspace = true }
 setup-lib = { workspace = true }
-pandas-lib = { workspace = true }
 
 [dependency-groups]
 dev = ["alembic>=1.14.1", "nox>=2025.2.9", "pytest-xdist>=3.6.1", "ruff>=0.9.5"]

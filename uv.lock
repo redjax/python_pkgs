@@ -183,18 +183,6 @@ wheels = [
 name = "depends-lib"
 version = "0.1.0"
 source = { editable = "libs/depends-lib" }
-dependencies = [
-    { name = "coreutils-lib" },
-    { name = "database-lib" },
-    { name = "settings-lib" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "coreutils-lib", editable = "libs/coreutils-lib" },
-    { name = "database-lib", editable = "libs/database-lib" },
-    { name = "settings-lib", editable = "libs/settings-lib" },
-]
 
 [[package]]
 name = "distlib"
@@ -699,9 +687,6 @@ wheels = [
 name = "python-pkgs"
 version = "0.1.0"
 source = { editable = "." }
-dependencies = [
-    { name = "pandas-lib" },
-]
 
 [package.dev-dependencies]
 dev = [
@@ -712,7 +697,6 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "pandas-lib", editable = "libs/pandas-lib" }]
 
 [package.metadata.requires-dev]
 dev = [
