@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+import logging
+
+log = logging.getLogger(__name__)
+
 import typing as t
 
 import sqlalchemy as sa
@@ -59,7 +63,10 @@ class BaseRepository(t.Generic[T]):
             return objs
         except Exception as exc:
             self.session.rollback()
-            raise RuntimeError(f"Failed to create objects: {exc}")
+            raise
+        except RuntimeError as runtime_exc:
+            self.session.rollback()
+            raise RuntimeError(f"Failed to create objects: {runtime_exc}")
 
     def get(self, id: int) -> t.Optional[T]:
         return self.session.get(self.model, id)
@@ -68,14 +75,28 @@ class BaseRepository(t.Generic[T]):
         for key, value in data.items():
             setattr(obj, key, value)
 
-        self.session.commit()
+        try:
+            self.session.commit()
+        except Exception as exc:
+            self.session.rollback()
+            raise
+        except RuntimeError as runtime_exc:
+            self.session.rollback()
+            raise RuntimeError(f"Failed to create objects: {runtime_exc}")
 
         return obj
 
     def delete(self, obj: T) -> None:
         self.session.delete(obj)
 
-        self.session.commit()
+        try:
+            self.session.commit()
+        except Exception as exc:
+            self.session.rollback()
+            raise
+        except RuntimeError as runtime_exc:
+            self.session.rollback()
+            raise RuntimeError(f"Failed to create objects: {runtime_exc}")
 
     def list(self) -> list[T]:
         return self.session.execute(sa.select(self.model)).scalars().all()
