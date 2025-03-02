@@ -14,16 +14,15 @@
 # settings-lib = { path = "../../libs/settings-lib" }
 # depends-lib = { path = "../../libs/depends-lib" }
 # ///
+from __future__ import annotations
 
-from loguru import logger as log
-
-from depends import db_depends
 import db_lib
+from depends import db_depends
+from loguru import logger as log
 from settings import db_settings
-
 import sqlalchemy as sa
-import sqlalchemy.orm as so
 import sqlalchemy.exc as sa_exc
+import sqlalchemy.orm as so
 
 if __name__ == "__main__":
     log.info("Start depends sandbox")

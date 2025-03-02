@@ -11,11 +11,11 @@
 # [tool.uv.sources]
 # pandas-lib = { path = "../../libs/pandas-lib" }
 # ///
+from __future__ import annotations
 
 from loguru import logger as log
-import pd_utils
-
 import pandas as pd
+import pd_utils
 
 if __name__ == "__main__":
     log.info("pd_utils sandbox")

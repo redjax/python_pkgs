@@ -9,10 +9,10 @@
 # coreutils-lib = { path = "../../libs/coreutils-lib" }
 # pandas-lib = { path = "../../libs/pandas-lib" }
 # ///
+from __future__ import annotations
 
+from core_utils import hash_utils, list_utils, path_utils, time_utils, uuid_utils
 from loguru import logger as log
-
-from core_utils import path_utils, hash_utils, list_utils, time_utils, uuid_utils
 
 if __name__ == "__main__":
     log.info("core_utils sandbox")
