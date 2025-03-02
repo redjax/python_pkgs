@@ -7,14 +7,13 @@
 # [tool.uv.sources]
 # database-lib = { path = "../../libs/database-lib" }
 # ///
+from __future__ import annotations
 
-
-from loguru import logger as log
 import db_lib
-
+from loguru import logger as log
 import sqlalchemy as sa
-import sqlalchemy.orm as so
 import sqlalchemy.exc as sa_exc
+import sqlalchemy.orm as so
 
 if __name__ == "__main__":
     log.info("db_lib sandbox")

@@ -9,12 +9,12 @@
 # [tool.uv.sources]
 # http-lib = { path = "../../libs/http-lib" }
 # ///
+from __future__ import annotations
 
-from loguru import logger as log
-
-import httpx
 import hishel
 import http_lib
+import httpx
+from loguru import logger as log
 
 if __name__ == "__main__":
     log.info("Start http_lib sandbox")

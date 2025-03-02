@@ -13,16 +13,15 @@
 # depends-lib = { path = "../../libs/depends-lib" }
 # database-lib = { path = "../../libs/database-lib" }
 # ///
-
-from loguru import logger as log
+from __future__ import annotations
 
 import db_lib
 from depends import db_depends
+from loguru import logger as log
 import setup
-
 import sqlalchemy as sa
-import sqlalchemy.orm as so
 import sqlalchemy.exc as sa_exc
+import sqlalchemy.orm as so
 
 if __name__ == "__main__":
     print("Configuring logging")

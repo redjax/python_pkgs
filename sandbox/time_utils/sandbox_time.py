@@ -8,9 +8,9 @@
 # [tool.uv.sources]
 # time-utils = { path = "../../libs/time-utils" }
 # ///
+from __future__ import annotations
 
 from loguru import logger as log
-
 import time_utils
 
 if __name__ == "__main__":
