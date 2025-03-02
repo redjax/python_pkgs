@@ -3,9 +3,13 @@
 # dependencies = [
 #     "loguru",
 #     "pandas",
+#     "pandas-lib",
 #     "pyarrow",
 #     "sqlalchemy",
 # ]
+#
+# [tool.uv.sources]
+# pandas-lib = { path = "../../libs/pandas-lib" }
 # ///
 
 from loguru import logger as log
