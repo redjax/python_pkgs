@@ -9,6 +9,8 @@ import sqlalchemy as sa
 import sqlalchemy.exc as sa_exc
 import sqlalchemy.orm as so
 
+_all__ = ["return_demo_db_config", "return_demo_engine"]
+
 def return_demo_db_config(
     drivername: str = "sqlite+pysqlite",
     username: str | None = None,

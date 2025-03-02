@@ -25,6 +25,7 @@ from .validators import validate_characters, validate_trim
 ## Instantiated UUIDLength class
 glob_uuid_lens: UUIDLength = UUIDLength()
 
+__all__ = ["gen_uuid", "trim_uuid", "first_n_chars", "get_rand_uuid"]
 
 def gen_uuid(as_hex: bool = False) -> Union[str, uuid.UUID]:
     """Return a UUID.
