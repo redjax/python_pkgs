@@ -687,6 +687,17 @@ wheels = [
 name = "python-pkgs"
 version = "0.1.0"
 source = { editable = "." }
+dependencies = [
+    { name = "coreutils-lib" },
+    { name = "database-lib" },
+    { name = "depends-lib" },
+    { name = "http-lib" },
+    { name = "loguru" },
+    { name = "pandas-lib" },
+    { name = "settings-lib" },
+    { name = "setup-lib" },
+    { name = "time-utils" },
+]
 
 [package.dev-dependencies]
 dev = [
@@ -697,6 +708,17 @@ dev = [
 ]
 
 [package.metadata]
+requires-dist = [
+    { name = "coreutils-lib", editable = "libs/coreutils-lib" },
+    { name = "database-lib", editable = "libs/database-lib" },
+    { name = "depends-lib", editable = "libs/depends-lib" },
+    { name = "http-lib", editable = "libs/http-lib" },
+    { name = "loguru", specifier = ">=0.7.3" },
+    { name = "pandas-lib", editable = "libs/pandas-lib" },
+    { name = "settings-lib", editable = "libs/settings-lib" },
+    { name = "setup-lib", editable = "libs/setup-lib" },
+    { name = "time-utils", editable = "libs/time-utils" },
+]
 
 [package.metadata.requires-dev]
 dev = [
