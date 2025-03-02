@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import hashlib
 
-from loguru import logger as log
+# from loguru import logger as log
+import logging
+
+log = logging.getLogger(__name__)
 
 __all__ = ["get_hash_from_str"]
 
