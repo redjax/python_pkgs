@@ -4,7 +4,17 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "coreutils-lib",
+    "database-lib",
+    "depends-lib",
+    "http-lib",
+    "loguru>=0.7.3",
+    "pandas-lib",
+    "settings-lib",
+    "setup-lib",
+    "time-utils",
+]
 
 [build-system]
 requires = ["hatchling"]
@@ -21,8 +31,10 @@ coreutils-lib = { workspace = true }
 database-lib = { workspace = true }
 depends-lib = { workspace = true }
 http-lib = { workspace = true }
+pandas-lib = { workspace = true }
 settings-lib = { workspace = true }
 setup-lib = { workspace = true }
+time-utils = { workspace = true }
 
 [dependency-groups]
 dev = ["alembic>=1.14.1", "nox>=2025.2.9", "pytest-xdist>=3.6.1", "ruff>=0.9.5"]

@@ -6,17 +6,19 @@ import typing as t
 log = logging.getLogger(__name__)
 
 import db_lib as db
-from settings import DB_SETTINGS
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 
+__all__ = ["get_db_engine", "get_db_uri", "get_session_pool"]
+
 def get_db_uri(
-    drivername: str = DB_SETTINGS.get("DB_DRIVERNAME", default="sqlite+pysqlite"),
-    username: str | None = DB_SETTINGS.get("DB_USERNAME", default=None),
-    password: str | None = DB_SETTINGS.get("DB_PASSWORD", default=None),
-    host: str | None = DB_SETTINGS.get("DB_HOST", default=None),
-    port: int | None = DB_SETTINGS.get("DB_PORT", default=None),
-    database: str = DB_SETTINGS.get("DB_DATABASE", default="demo.sqlite"),
+    db_type: str = "sqlite",
+    drivername: str = "sqlite+pysqlite",
+    username: str | None = None,
+    password: str | None = None,
+    host: str | None = None,
+    port: int | None = None,
+    database: str = ":memory:",
     as_str: bool = False,
     hide_password: bool = True
 ) -> sa.URL:
@@ -35,7 +37,7 @@ def get_db_uri(
         (sa.URL): A SQLAlchemy `URL`
 
     """
-    if DB_SETTINGS.get("DB_TYPE") == "sqlite":
+    if db_type == "sqlite":
         db_uri: sa.URL = db.get_db_uri(drivername=drivername, database=database, username=None, password=None, host=None, port=None)
         
         if as_str:

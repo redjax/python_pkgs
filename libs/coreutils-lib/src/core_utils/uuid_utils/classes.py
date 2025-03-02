@@ -2,6 +2,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+__all__ = ["UUIDLength"]
+
+
 @dataclass
 class UUIDLength:
     """Simple dataclass to store UUID string lengths.
