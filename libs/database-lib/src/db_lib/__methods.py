@@ -5,11 +5,12 @@ import typing as t
 
 log = logging.getLogger(__name__)
 
-from settings import DB_SETTINGS
 import sqlalchemy as sa
 import sqlalchemy.exc as sa_exc
 import sqlalchemy.orm as so
 import sqlalchemy.sql as sa_sql
+
+__all__ = ["get_db_uri", "get_engine", "get_session_pool", "create_base_metadata", "count_table_rows", "show_table_names"]
 
 def get_db_uri(
     drivername: str,
@@ -91,7 +92,7 @@ def get_engine(
     logging_name: str | None = None,
     execution_options: dict | None = None,
     hide_parameters: bool = False,
-    echo: bool = DB_SETTINGS.get("DB_ECHO", default=False),
+    echo: bool = False,
     query_cache_size: int = 500,
 ) -> sa.Engine:
     engine = sa.create_engine(
