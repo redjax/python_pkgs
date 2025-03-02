@@ -3,14 +3,9 @@ name = "setup-lib"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-authors = [
-    { name = "redjax", email = "no@none.com" }
-]
+authors = [{ name = "redjax", email = "no@none.com" }]
 requires-python = ">=3.11"
-dependencies = [
-    "database-lib",
-    "loguru>=0.7.3",
-]
+dependencies = ["loguru>=0.7.3"]
 
 [project.scripts]
 setup-lib = "setup_lib:main"

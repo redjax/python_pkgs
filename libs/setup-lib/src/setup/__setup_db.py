@@ -2,15 +2,40 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import db_lib as db
-from depends import db_depends
 from loguru import logger as log
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 
+__all__ = ["setup_database"]
+
+def create_base_metadata(
+    base: so.DeclarativeBase = None, engine: sa.Engine = None
+) -> None:
+    """Create a SQLAlchemy base object's table metadata.
+
+    Params:
+        base (sqlalchemy.orm.DeclarativeBase): A SQLAlchemy `DeclarativeBase` object to use for creating metadata.
+    """
+    if base is None:
+        raise ValueError("base cannot be None")
+    if engine is None:
+        raise ValueError("engine cannot be None")
+    if not isinstance(engine, sa.Engine):
+        raise TypeError(
+            f"engine must be of type sqlalchemy.Engine. Got type: ({type(engine)})"
+        )
+
+    try:
+        base.metadata.create_all(bind=engine)
+    except Exception as exc:
+        msg = Exception(
+            f"({type(exc)}) Unhandled exception creating Base metadata. Details: {exc}"
+        )
+        raise msg
+
 def setup_database(
-    sqla_base: so.DeclarativeBase = db.Base,
-    engine: sa.Engine = db_depends.get_db_engine(),
+    sqla_base: so.DeclarativeBase,
+    engine: sa.Engine,
 ) -> None:
     """Setup the database tables and metadata.
 
@@ -38,4 +63,10 @@ def setup_database(
                 log.error(msg)
                 raise exc
 
-    db.create_base_metadata(base=sqla_base, engine=engine)
+    try:
+        create_base_metadata(base=sqla_base, engine=engine)
+    except Exception as exc:
+        msg = f"({type(exc)}) Error initializing Base metadata. Details: {exc}"
+        log.error(msg)
+        
+        raise
