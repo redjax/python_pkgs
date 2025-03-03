@@ -21,7 +21,10 @@ if __name__ == "__main__":
     log.info("pd_utils sandbox")
 
     log.info("Creating a DataFrame")
-    df: pd.DataFrame = pd.DataFrame({"A": [1, 2, 3], "B": [4, 5, 6]})
+    df: pd.DataFrame = pd.DataFrame({"A": [1, 3, 2], "B": [4, 5, 6]})
 
     log.info("Displaying DataFrame")
-    print(df.head(5))
+    log.info(f"Dataframe:\n{df.head(5)}")
+    
+    sorted_col_df = pd_utils.sort_df_by_col(df, "A")
+    log.info(f"Dataframe sorted:\n{sorted_col_df.head(5)}")

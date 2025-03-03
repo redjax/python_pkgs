@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import logging
 from pathlib import Path
 
-from loguru import logger as log
+log = logging.getLogger(__name__)
+
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 

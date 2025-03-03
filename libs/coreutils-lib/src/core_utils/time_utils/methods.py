@@ -11,7 +11,9 @@ from typing import Union
 
 from .constants import TIME_FMT_12H, TIME_FMT_24H
 
-from loguru import logger as log
+import logging
+
+log = logging.getLogger(__name__)
 
 __all__ = ["datetime_as_dt", "datetime_as_str", "get_ts", "wait"]
 
