@@ -8,7 +8,6 @@ from db_lib.__methods import get_db_uri, get_engine, get_session_pool
 
 from .constants import DEMO_DB_CONFIG
 
-# from loguru import logger as log
 import sqlalchemy as sa
 import sqlalchemy.exc as sa_exc
 import sqlalchemy.orm as so
