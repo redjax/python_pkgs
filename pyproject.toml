@@ -38,3 +38,13 @@ time-utils = { workspace = true }
 
 [dependency-groups]
 dev = ["alembic>=1.14.1", "nox>=2025.2.9", "pytest-xdist>=3.6.1", "ruff>=0.9.5"]
+
+[tool.mypy]
+python_version = "3.9"
+ignore_missing_imports = true
+check_untyped_defs = false
+disallow_untyped_calls = false
+disallow_untyped_defs = false
+warn_unused_ignores = true
+warn_return_any = true
+strict_optional = true
