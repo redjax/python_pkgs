@@ -23,6 +23,18 @@ build-backend = "hatchling.build"
 [tool.setuptools]
 py-modules = []
 
+[tool.hatch.build.targets.wheel]
+packages = [
+    "libs/core_utils",
+    "libs/database",
+    "libs/depends",
+    "libs/http",
+    "libs/pandas",
+    "libs/settings",
+    "libs/setup",
+    "libs/time_utils",
+]
+
 [tool.uv.workspace]
 members = ["libs/*"]
 
