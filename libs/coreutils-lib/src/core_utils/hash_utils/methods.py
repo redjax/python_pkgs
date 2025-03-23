@@ -23,7 +23,7 @@ def get_hash_from_str(input_str: str = None, encoding: str = "utf-8") -> str:
         Exception: A generic `Exception` when converting string to hash fails
 
     """
-    if not input_str:
+    if input_str is None:
         raise ValueError("Missing input string")
 
     if not encoding:
