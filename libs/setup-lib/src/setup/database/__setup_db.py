@@ -8,7 +8,7 @@ log = logging.getLogger(__name__)
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 
-__all__ = ["setup_database"]
+__all__ = ["setup_database", "create_base_metadata"]
 
 def create_base_metadata(
     base: so.DeclarativeBase = None, engine: sa.Engine = None
