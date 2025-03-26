@@ -2,6 +2,8 @@ import pytest
 
 from datetime import datetime
 
+from core_utils.uuid_utils.constants import UUIDLength
+
 __all__ = [
     "sample_input_str",
     "sample_encoding",
@@ -17,7 +19,8 @@ __all__ = [
     "empty_filename",
     "filename_with_only_unsafe_chars",
     "timestamp",
-    "dt_str"
+    "dt_str",
+    "uuid_lengths"
 ]
 
 @pytest.fixture
@@ -79,3 +82,7 @@ def timestamp() -> datetime:
 @pytest.fixture
 def dt_str() -> str:
     return "09:57:00"
+
+@pytest.fixture
+def uuid_lengths():
+    return UUIDLength()
