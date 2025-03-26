@@ -53,38 +53,27 @@ def gen_uuid(as_hex: bool = False) -> Union[str, uuid.UUID]:
 
 
 def trim_uuid(trim: int = 0, in_uuid: str = uuid.uuid4(), as_hex: bool = False) -> str:
-    """Trim UUID string, removing n characters from end of string (where n is value of trim).
-
-    Params:
-        trim (int): Number of characters to remove from end of UUID string.
-        in_uuid (str): An existing UUID `str` to be trimmed/converted to hex.
-        as_hex (bool): If `True`, returns a UUID hex (UUID `str` without the `-` characters).
-
-    Returns:
-        (str): A 36 character UUID string
-        (str): A 32 character UUID hex string (a UUID minus the `-` characters)
-
-    """
-    ## Set max character count
-    ## Attempt to convert inputs value to integer
+    """Trim UUID string, removing n characters from end of string (where n is value of trim)."""
+    # Validate and convert trim to integer
     if not isinstance(trim, int):
         trim = int(trim)
 
+    # Determine maximum length based on as_hex
     if as_hex:
-        _max = glob_uuid_lens.hex - 1
+        _uuid = str(in_uuid).replace("-", "")  # Convert to hex (remove dashes)
+        _max = glob_uuid_lens.hex
     else:
-        _max = glob_uuid_lens.standard - 1
+        _uuid = str(in_uuid)
+        _max = glob_uuid_lens.standard
 
-    ## Validate trim/characters
+    # Validate trim length
     if trim < 0 or trim > _max:
         raise ValueError(
-            f"Invalid trim length: {trim}. Must be greater than 0 and less than {_max} ({_max -1})."
+            f"Invalid trim length: {trim}. Must be greater than 0 and less than {_max}."
         )
 
-    ## Trim n characters from end of string
-    _uuid: str = str(in_uuid)[:-trim]
-
-    return _uuid
+    # Trim n characters from end of string
+    return _uuid[:-trim] if trim > 0 else _uuid
 
 
 def first_n_chars(first_n: int = 36, in_uuid: str = uuid.uuid4(), as_hex: bool = False):
