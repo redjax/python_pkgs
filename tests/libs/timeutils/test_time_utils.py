@@ -10,7 +10,6 @@ from core_utils.time_utils import (
     wait
 )
 from core_utils.time_utils.constants import TIME_FMT_12H, TIME_FMT_24H
-
 from .fixtures import timestamp, dt_str
 
 __all__ = [

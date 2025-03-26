@@ -17,10 +17,7 @@ __all__ = [
     "filename_with_mixed_issues",
     "filename_with_leading_trailing_issues",
     "empty_filename",
-    "filename_with_only_unsafe_chars",
-    "timestamp",
-    "dt_str",
-    "uuid_lengths"
+    "filename_with_only_unsafe_chars"
 ]
 
 @pytest.fixture
@@ -74,14 +71,6 @@ def empty_filename():
 @pytest.fixture
 def filename_with_only_unsafe_chars():
     return "<>:\"/\\|?*"
-
-@pytest.fixture
-def timestamp() -> datetime:
-    return datetime.now()
-
-@pytest.fixture
-def dt_str() -> str:
-    return "09:57:00"
 
 @pytest.fixture
 def uuid_lengths():
