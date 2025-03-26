@@ -1,8 +1,9 @@
-import logging
-import typing as t
-import subprocess as sp
+from __future__ import annotations
 
+import logging
 from pathlib import Path
+import subprocess as sp
+import typing as t
 
 log = logging.getLogger(__name__)
 

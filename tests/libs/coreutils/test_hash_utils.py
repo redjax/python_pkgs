@@ -1,6 +1,9 @@
-import pytest
-from core_utils import hash_utils
+from __future__ import annotations
+
 from .fixtures import sample_encoding, sample_input_str
+
+from core_utils import hash_utils
+import pytest
 
 __all__ = ["test_hash_str", "test_hash_str_different_inputs", "test_hash_str_invalid_input", "test_hash_str_invalid_encoding"]
 

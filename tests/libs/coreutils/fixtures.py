@@ -1,8 +1,9 @@
-import pytest
+from __future__ import annotations
 
 from datetime import datetime
 
 from core_utils.uuid_utils.constants import UUIDLength
+import pytest
 
 __all__ = [
     "sample_input_str",

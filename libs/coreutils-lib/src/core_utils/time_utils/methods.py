@@ -5,13 +5,12 @@ from datetime import (
     datetime as dt,
     timedelta,
 )
+import logging
 import re
 import time
 from typing import Union
 
 from .constants import TIME_FMT_12H, TIME_FMT_24H
-
-import logging
 
 log = logging.getLogger(__name__)
 

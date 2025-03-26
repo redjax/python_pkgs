@@ -1,9 +1,17 @@
-import pytest
+from __future__ import annotations
+
 import uuid
-from core_utils.uuid_utils import gen_uuid, trim_uuid, first_n_chars, get_rand_uuid
-from core_utils.uuid_utils import UUIDLength
 
 from .fixtures import uuid_lengths
+
+from core_utils.uuid_utils import (
+    UUIDLength,
+    first_n_chars,
+    gen_uuid,
+    get_rand_uuid,
+    trim_uuid,
+)
+import pytest
 
 __all__ = [
     "test_gen_uuid",

@@ -1,7 +1,9 @@
-import pytest
-from core_utils import list_utils
+from __future__ import annotations
 
-from .fixtures import sample_list, empty_list, single_item_list, string_list
+from .fixtures import empty_list, sample_list, single_item_list, string_list
+
+from core_utils import list_utils
+import pytest
 
 __all__ = [
     "test_shuffle_list",

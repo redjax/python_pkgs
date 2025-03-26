@@ -1,15 +1,17 @@
-import pytest
-from core_utils import path_utils
+from __future__ import annotations
 
 from .fixtures import (
-    normal_filename,
+    empty_filename,
+    filename_with_leading_trailing_issues,
+    filename_with_mixed_issues,
+    filename_with_only_unsafe_chars,
     filename_with_spaces,
     filename_with_unsafe_chars,
-    filename_with_mixed_issues,
-    filename_with_leading_trailing_issues,
-    filename_with_only_unsafe_chars,
-    empty_filename
+    normal_filename,
 )
+
+from core_utils import path_utils
+import pytest
 
 __all__ = [
     "test_sanitize_normal_filename",

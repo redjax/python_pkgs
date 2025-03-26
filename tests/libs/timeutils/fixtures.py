@@ -1,5 +1,8 @@
-import pytest
+from __future__ import annotations
+
 from datetime import datetime
+
+import pytest
 
 __all__ = [
     "timestamp",

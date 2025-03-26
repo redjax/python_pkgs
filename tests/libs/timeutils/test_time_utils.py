@@ -1,16 +1,14 @@
-import pytest
-from datetime import datetime, timedelta
-import re
-import logging
+from __future__ import annotations
 
-from core_utils.time_utils import (
-    datetime_as_str,
-    datetime_as_dt,
-    get_ts,
-    wait
-)
+from datetime import datetime, timedelta
+import logging
+import re
+
+from .fixtures import dt_str, timestamp
+
+from core_utils.time_utils import datetime_as_dt, datetime_as_str, get_ts, wait
 from core_utils.time_utils.constants import TIME_FMT_12H, TIME_FMT_24H
-from .fixtures import timestamp, dt_str
+import pytest
 
 __all__ = [
     "test_datetime_as_str",

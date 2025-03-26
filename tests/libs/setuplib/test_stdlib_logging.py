@@ -1,11 +1,13 @@
-import pytest
-import logging
+from __future__ import annotations
+
 import logging
 import logging.handlers
 from pathlib import Path
-import setup
 
 from .fixtures import temp_log_file
+
+import pytest
+import setup
 
 def test_get_rotating_file_handler(temp_log_file):
     handler = setup.get_rotating_file_handler(temp_log_file)
