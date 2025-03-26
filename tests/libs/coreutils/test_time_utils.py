@@ -13,6 +13,19 @@ from core_utils.time_utils.constants import TIME_FMT_12H, TIME_FMT_24H
 
 from .fixtures import timestamp, dt_str
 
+__all__ = [
+    "test_datetime_as_str",
+    "test_datetime_as_dt",
+    "test_get_ts",
+    "test_wait",
+    "test_wait_invalid_input",
+    "test_wait_invalid_msg",
+    "test_get_ts",
+    "test_wait",
+    "test_wait_invalid_input",
+    "test_wait_invalid_msg",
+]
+
 def test_datetime_as_str(timestamp: datetime):
     ## Test with default format (24-hour)
     result = datetime_as_str(timestamp)

@@ -5,6 +5,20 @@ from core_utils.uuid_utils import UUIDLength
 
 from .fixtures import uuid_lengths
 
+__all__ = [
+    "test_gen_uuid",
+    "test_trim_uuid",
+    "test_first_n_chars",
+    "test_get_rand_uuid",
+    "test_get_rand_uuid_invalid_inputs",
+    "test_gen_uuid_with_version",
+    "test_trim_uuid_excessive_trim",
+    "test_first_n_chars_non_integer",
+    "test_get_rand_uuid_non_uuid_input",
+    "test_concurrent_uuid_generation",
+    "test_uuid_namespace"
+]
+
 ## Test gen_uuid function
 def test_gen_uuid():
     ## Test default behavior (returns a UUID object)
