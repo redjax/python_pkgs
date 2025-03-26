@@ -1,5 +1,7 @@
 import pytest
 
+from datetime import datetime
+
 __all__ = [
     "sample_input_str",
     "sample_encoding",
@@ -13,7 +15,9 @@ __all__ = [
     "filename_with_mixed_issues",
     "filename_with_leading_trailing_issues",
     "empty_filename",
-    "filename_with_only_unsafe_chars"
+    "filename_with_only_unsafe_chars",
+    "timestamp",
+    "dt_str"
 ]
 
 @pytest.fixture
@@ -67,3 +71,11 @@ def empty_filename():
 @pytest.fixture
 def filename_with_only_unsafe_chars():
     return "<>:\"/\\|?*"
+
+@pytest.fixture
+def timestamp() -> datetime:
+    return datetime.now()
+
+@pytest.fixture
+def dt_str() -> str:
+    return "09:57:00"
