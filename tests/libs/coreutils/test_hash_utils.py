@@ -29,7 +29,7 @@ def test_hash_str_invalid_input(invalid_input):
 
 @pytest.mark.xfail(raises=LookupError, reason="Invalid encoding should fail", strict=True)
 def test_hash_str_invalid_encoding(sample_input_str):
-    # Remove context manager since xfail handles expected exceptions
+    ## Remove context manager since xfail handles expected exceptions
     hash_utils.get_hash_from_str(
         input_str=sample_input_str, 
         encoding="invalid_encoding"

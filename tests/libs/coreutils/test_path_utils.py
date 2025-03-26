@@ -54,7 +54,8 @@ def test_sanitize_empty_filename(empty_filename):
 
 def test_sanitize_filename_with_only_unsafe_chars(filename_with_only_unsafe_chars):
     sanitized = path_utils.sanitize_filename(filename_with_only_unsafe_chars)
-    assert sanitized == ""  # All chars are replaced and then stripped
+    ## All chars are replaced and then stripped
+    assert sanitized == ""
 
 @pytest.mark.parametrize("space_replacement", ["_", "-", ""])
 def test_sanitize_filename_custom_space_replacement(filename_with_spaces, space_replacement):
@@ -71,4 +72,3 @@ def test_sanitize_filename_no_replacements():
     filename = "file<with>unsafe:chars?.txt"
     sanitized = path_utils.sanitize_filename(filename, space_replacement="", unsafe_char_replacement="")
     assert sanitized == "filewithunsafechars.txt"
-

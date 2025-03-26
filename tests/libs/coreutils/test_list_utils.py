@@ -1,8 +1,6 @@
-# tests/libs/coreutils/test_list_utils.py
 import pytest
 from core_utils import list_utils
 
-# Import fixtures
 from .fixtures import sample_list, empty_list, single_item_list, string_list
 
 __all__ = [
@@ -22,7 +20,9 @@ def test_shuffle_list(sample_list):
     shuffled = list_utils.shuffle_list(sample_list)
     assert len(shuffled) == len(sample_list)
     assert set(shuffled) == set(sample_list)
-    assert shuffled != sample_list  # This might rarely fail due to randomness
+    
+    ## This might rarely fail due to randomness
+    assert shuffled != sample_list
 
 def test_shuffle_empty_list(empty_list):
     assert list_utils.shuffle_list(empty_list) == []
