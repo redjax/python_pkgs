@@ -14,7 +14,12 @@ from dynaconf import Dynaconf
 import hishel
 import httpx
 
-__all__ = ["HTTP_SETTINGS", "get_http_controller", "HttpxController"]
+__all__ = [
+    "get_http_controller",
+    "HttpxController",
+    "merge_headers",
+]
+
 
 ## Load HTTP settings from environment
 HTTP_SETTINGS = Dynaconf(
@@ -99,14 +104,6 @@ def get_http_controller(
         (HttpxController): Initialized HttpxController object to use for requests.
 
     """
-    log.debug("use_cache is disabled, setting all cache-related settings to None.")
-    if not use_cache:
-        cache_type = None
-        cache_file_dir = None
-        cache_db_file = None
-        cache_ttl = None
-        check_ttl_every = None
-
     ## Build HttpxController object
     try:
         http_ctl: HttpxController = HttpxController(
@@ -134,23 +131,21 @@ def get_http_controller(
 
 def merge_headers(header_dicts: list[t.Union[str, dict]] | None = []) -> dict:
     """Merge multiple header dicts/JSON strings into a single header.
-
+    
     Params:
         header_dicts (list[Union[str, dict]] | None): An optional list of headers (dicts or JSON strings) to merge into 1.
         If header_dicts is empty, returns an empty dict.
-
+    
     Returns:
         (dict): A dict of merged headers, or an empty dict if no headers detected in input.
-
+    
     """
-    if header_dicts is None or (
-        isinstance(header_dicts, list) and len(header_dicts) == 0
-    ):
+    if header_dicts is None or (isinstance(header_dicts, list) and len(header_dicts) == 0):
         log.warning("header_dicts is an empty list or None. Returning an empty dict.")
         return {}
-
+    
     headers: dict = {}
-
+    
     for header_dict in header_dicts:
         if header_dict is None:
             continue
@@ -160,11 +155,9 @@ def merge_headers(header_dicts: list[t.Union[str, dict]] | None = []) -> dict:
         elif isinstance(header_dict, dict):
             headers = {**headers, **header_dict}
         else:
-            log.error(
-                f"header_dict should be a dict or str. Got type: ({type(header_dict)})"
-            )
+            log.error(f"header_dict should be a dict or str. Got type: ({type(header_dict)})")
             continue
-
+        
     return headers
 
 
@@ -227,9 +220,7 @@ class HttpxController(AbstractContextManager):
         self.use_cache: bool = use_cache
         self.force_cache: bool = force_cache
         self.follow_redirects: bool = follow_redirects
-        self.cache_type: str | None = (
-            cache_type.lower() if (cache_type and isinstance(cache_type, str)) else None
-        )
+        self.cache_type: str | None = cache_type.lower()
         self.cache_file_dir: str | None = cache_file_dir
         self.cache_db_file: str = cache_db_file
         self.cache_ttl: int | None = cache_ttl
@@ -289,9 +280,6 @@ class HttpxController(AbstractContextManager):
 
     def _get_cache(self) -> t.Union[hishel.SQLiteStorage, hishel.FileStorage] | None:
         """Initialize hishel cache storage."""
-        if not self.use_cache:
-            return None
-
         match self.cache_type:
             case None:
                 return None
@@ -317,9 +305,6 @@ class HttpxController(AbstractContextManager):
 
     def _get_cache_controller(self) -> hishel.Controller:
         """Initialize hishel cache controller."""
-        if not self.use_cache:
-            return None
-
         _controller: hishel.Controller = cache.get_cache_controller(
             force_cache=self.force_cache,
             cacheable_methods=self.cacheable_methods,
@@ -332,27 +317,19 @@ class HttpxController(AbstractContextManager):
 
     def _get_cache_transport(self) -> hishel.CacheTransport:
         """Initialize hishel cache transport from class params."""
-        if not self.use_cache:
-            return None
-
         if self.cache is None:
-            if self.use_cache:
-                cache_storage: hishel.SQLiteStorage | hishel.FileStorage | None = (
-                    self._get_cache()
-                )
-                self.cache = cache_storage
+            cache_storage: hishel.SQLiteStorage | hishel.FileStorage | None = (
+                self._get_cache()
+            )
+            self.cache = cache_storage
 
         if self.cache_controller is None:
-            if self.use_cache:
-                cache_controller: hishel.Controller = self._get_cache_controller()
-                self.cache_controller = cache_controller
+            cache_controller: hishel.Controller = self._get_cache_controller()
+            self.cache_controller = cache_controller
 
-        if self.use_cache:
-            _transport: hishel.CacheTransport = cache.get_cache_transport(
-                cache_storage=self.cache, cache_controller=self.cache_controller
-            )
-        else:
-            _transport = None
+        _transport: hishel.CacheTransport = cache.get_cache_transport(
+            cache_storage=self.cache, cache_controller=self.cache_controller
+        )
 
         self.cache_transport = _transport
 
@@ -360,41 +337,9 @@ class HttpxController(AbstractContextManager):
 
     def _get_client(self) -> httpx.Client:
         """Return an httpx.Client object initialized from class parameters."""
-        if self.use_cache:
-            transport: hishel.CacheTransport | None = self.cache_transport
-            client = httpx.Client(
-                transport=transport, follow_redirects=self.follow_redirects
-            )
+        transport: hishel.CacheTransport | None = self.cache_transport
+        client = httpx.Client(
+            transport=transport, follow_redirects=self.follow_redirects
+        )
 
-            return client
-        else:
-            return httpx.Client()
-
-    def send_request(
-        self,
-        request: httpx.Request,
-        auth: t.Union[
-            t.Tuple[t.Union[str, bytes], t.Union[str, bytes]],
-            t.Callable[[httpx.Request], httpx.Request],
-            httpx.Auth,
-        ] = None,
-        stream: bool = False,
-    ) -> httpx.Response:
-        """Make an HTTP request and return the httpx.Response using the controller's .client.
-
-        Params:
-            request (httpx.Request): An initialized HTTPX Request object to send.
-
-        Returns:
-            (httpx.Response): An HTTPX Response object with the response's data.
-
-        """
-        try:
-            res: httpx.Response = self.client.send(request, stream=stream, auth=auth)
-
-            return res
-        except Exception as exc:
-            msg = f"({type(exc)}) Error sending request. Details: {exc}"
-            self.logger.error(msg)
-
-            raise exc
+        return client

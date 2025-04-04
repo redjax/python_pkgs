@@ -5,13 +5,12 @@ from datetime import (
     datetime as dt,
     timedelta,
 )
+import logging
 import re
 import time
 from typing import Union
 
 from .constants import TIME_FMT_12H, TIME_FMT_24H
-
-import logging
 
 log = logging.getLogger(__name__)
 
@@ -93,10 +92,10 @@ def wait(s: int = 1, msg: str | None = "Waiting {} seconds...") -> None:
 
                 Example: 'I will now wait for {} second(s)' => 'I will now wait for 15 seconds...'
     """
-    assert s, ValueError("Missing amount of time to sleep")
-    assert isinstance(s, int) and s > 0, ValueError(
-        f"Value of s must be a positive, non-zero integer. Input value ({type(s)}): {s} is invalid."
-    )
+    if not s:
+        raise ValueError("Missing amount of time to sleep")
+    if not isinstance(s, int) or s <= 0:
+        raise ValueError(f"Invalid sleep time: {s} (must be positive integer)")
 
     ## If msg != None, validate & print before pausing
     if msg:
