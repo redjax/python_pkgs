@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dynaconf import Dynaconf
 
 __all__ = ["SETTINGS", "get_namespace"]
@@ -38,6 +40,7 @@ def get_namespace(namespace: str) -> Dynaconf:
 
     Returns:
         (Dynaconf): A scoped Dynaconf settings object.
+
     """
     try:
         scoped_settings = SETTINGS.from_env(namespace)
