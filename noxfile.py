@@ -165,11 +165,19 @@ def export_requirements(session: nox.Session, requirements_output_dir: Path):
     log.info("Exporting production requirements")
     session.run(
         "uv",
-        "pip",
-        "compile",
-        "pyproject.toml",
+        "export",
+        "--no-hashes",
         "-o",
         str(REQUIREMENTS_OUTPUT_DIR / "requirements.txt"),
+    )
+
+    log.info("Exporting development requirements
+    session.run(
+        "uv",
+        "export",
+        "--only-dev",
+        "--no-hashes",
+        str(REQUIREMENTS_OUTPUT_DIR / "requirements.dev.txt"
     )
 
 
