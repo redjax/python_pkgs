@@ -5,7 +5,19 @@ name: Uv export requirements
 
 on:
   workflow_dispatch:
-
+    inputs:
+      commit_message:
+        description: "Commit message for updated requirements"
+        required: false
+        default: "chore: update requirements"
+      commit_title:
+        description: "Pull request title"
+        required: false
+        default: "Export requirements*.txt"
+      commit_body:
+        description: "Pull request body"
+        required: false
+        default: "Export production & development requirements"
   # pull_request:
   #   branches:
   #     - main
@@ -42,7 +54,7 @@ jobs:
       #   with:
       #     commit_message: "${{ github.event.inputs.commit_message || 'chore: update requirements' }}"
 
-      ## Uncomment if you don't have a commit-changes workflow to call
+      ## Commit and push changes
       - name: Commit and push changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -53,9 +65,9 @@ jobs:
             echo "Changes detected. Committing..."
             git add requirements.txt requirements.dev.txt
             git commit -m "${{ github.event.inputs.commit_message }}"
-            git push origin HEAD:${{ github.event.pull_request.head.ref || github.ref_name }}"
+            git push origin HEAD:${{ github.ref_name }}
           else
-            echo "No changes detected. Skipping commmit."
+            echo "No changes detected. Skipping commit."
           fi
 
       ## Open new PR to main
@@ -63,7 +75,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           branch: chore/bump-depends
-          commit-message: "${{ inputs.commit_message || 'chore: export requirements' }}"
-          title: "${{ inputs.commit_title || 'Export requirements*.txt' }}"
-          body: "${{ inputs.commit_body || 'Export production & development requirements' }}"
+          commit-message: "${{ github.event.inputs.commit_message }}"
+          title: "${{ github.event.inputs.commit_title }}"
+          body: "${{ github.event.inputs.commit_body }}"
           base: main
