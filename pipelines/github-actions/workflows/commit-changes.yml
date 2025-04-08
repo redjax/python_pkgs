@@ -1,3 +1,4 @@
+---
 ## Re-usable workfloww to commit changes made in pipelines.
 #  Usage:
 #    In another pipeline, add a step that calls this workflow:
