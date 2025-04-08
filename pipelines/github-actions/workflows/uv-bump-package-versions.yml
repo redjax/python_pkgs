@@ -1,0 +1,60 @@
+---
+## Github Action to upgrade all packages with uv
+name: Upgrade uv packages
+on:
+  ## Make this an on-demand Action
+  workflow_dispatch:
+  workflow_call:
+
+    inputs:
+      uv_version:
+        required: false
+        type: string
+        default: "latest"
+      commit_title:
+        required: false
+        type: string
+        default: Update packages
+      commit_message:
+        required: false
+        type: string
+        default: "chore: bump dependencies using uv"
+      commit_body:
+        required: false
+        type: string
+        default: "Automated dependency version bumps via uv"
+
+jobs:
+
+  bump-dependencies:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      ## Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      ## Install uv in pipeline
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "${{ inputs.uv_version || 'latest' }}"
+
+      ## Update packages
+      - name: Upgrade dependencies
+        run: uv lock -U
+
+      ## Open new PR to main
+      - name: Create PR for dependency updates
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: chore/bump-depends
+          commit-message: "${{ inputs.commit_message || 'chore: bump dependencies' }}"
+          title: "${{ inputs.commit_title || 'Update dependencies' }}"
+          body: "${{ inputs.commit_body || 'Bump dependency versions' }}"
+          base: main
