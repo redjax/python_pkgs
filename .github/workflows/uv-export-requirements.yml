@@ -6,16 +6,16 @@ name: Uv export requirements
 on:
   workflow_dispatch:
 
-  pull_request:
-    branches:
-      - main
-    types:
-      - opened
-      - reopened
-      - synchronize
-    paths:
-      - "pyproject.toml"
-      - "uv.lock"
+  # pull_request:
+  #   branches:
+  #     - main
+  #   types:
+  #     - opened
+  #     - reopened
+  #     - synchronize
+  #   paths:
+  #     - "pyproject.toml"
+  #     - "uv.lock"
     
 jobs:
   export-and-commit:
@@ -52,3 +52,13 @@ jobs:
       #     git add requirements.txt requirements.dev.txt
       #     git commit -m "${{ github.event.inputs.commit_message }}"
       #     git push origin HEAD:${{ github.event.pull_request.head.ref || github.ref_name }}"
+
+      ## Open new PR to main
+      - name: Create PR for dependency updates
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: chore/bump-depends
+          commit-message: "${{ inputs.commit_message || 'chore: export requirements' }}"
+          title: "${{ inputs.commit_title || 'Export requirements*.txt' }}"
+          body: "${{ inputs.commit_body || 'Export production & development requirements' }}"
+          base: main

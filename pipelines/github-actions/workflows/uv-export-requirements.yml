@@ -56,3 +56,14 @@ jobs:
       #     git add requirements.txt requirements.dev.txt
       #     git commit -m "${{ github.event.inputs.commit_message }}"
       #     git push origin HEAD:${{ github.event.pull_request.head.ref || github.ref_name }}"
+
+      ## Uncomment if running on demand.
+      ## Open new PR to main
+      - name: Create PR for dependency updates
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: chore/bump-depends
+          commit-message: "${{ inputs.commit_message || 'chore: export requirements' }}"
+          title: "${{ inputs.commit_title || 'Export production & dev requirements*.txt' }}"
+          body: "${{ inputs.commit_body || 'Export requirements' }}"
+          base: main
