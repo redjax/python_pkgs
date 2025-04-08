@@ -72,6 +72,8 @@ jobs:
       #  Commits changes back to branch for pull request
       - name: Commit changes back to branch
         uses: ./.github/workflows/commit-changes.yml
+        with:
+          commit_message: "Apply lint fixes via Ruff"
 
       ## Use the code below if you did not create an on-deman commit-changes.yml workflow
       ## Commit changes back to branch
