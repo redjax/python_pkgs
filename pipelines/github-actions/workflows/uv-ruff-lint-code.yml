@@ -71,24 +71,24 @@ jobs:
 
       ## Import re-usable workflow from commit-changes.yml
       #  Commits changes back to branch for pull request
-      - name: Commit changes back to branch
-        uses: ./.github/workflows/commit-changes.yml
-        with:
-          commit_message: "Apply lint fixes via Ruff"
+      # - name: Commit changes back to branch
+      #   uses: ./.github/workflows/commit-changes.yml
+      #   with:
+      #     commit_message: "Apply lint fixes via Ruff"
 
       ## Use the code below if you did not create an on-deman commit-changes.yml workflow
       ## Commit changes back to branch
-      # - name: Commit and push changes
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   run: |
-      #     git config user.name "github-actions[bot]"
-      #     git config user.email "github-actions[bot]@users.noreply.github.com"
-      #     if ! git diff --quiet; then
-      #       echo "Changes detected. Committing..."
-      #       git add .
-      #       git commit -m "Apply lint fixes via Ruff"
-      #       git push origin HEAD:${{ github.event.pull_request.head.ref }}
-      #     else
-      #       echo "No changes detected. Skipping commmit."
-      #     fi
+      - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet; then
+            echo "Changes detected. Committing..."
+            git add .
+            git commit -m "Apply lint fixes via Ruff"
+            git push origin HEAD:${{ github.event.pull_request.head.ref }}
+          else
+            echo "No changes detected. Skipping commmit."
+          fi
