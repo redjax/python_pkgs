@@ -30,6 +30,7 @@ on:
     types:
       - opened
       - reopened
+      - synchronize
 
 jobs:
 
