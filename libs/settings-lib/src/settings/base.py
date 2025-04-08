@@ -10,8 +10,8 @@ SETTINGS = Dynaconf(
     settings_files=[
         "settings.toml",
         ".secrets.toml",
-        "config/settings.toml",
-        "config/.secrets.toml",
+        "config/**/settings.toml",
+        "config/**/.secrets.toml",
     ],
 )
 
