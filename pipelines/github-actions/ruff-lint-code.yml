@@ -12,25 +12,24 @@ on:
     types:
       - opened
       - reopened
-    paths:
-      ## Uncomment path patterns appropriate for your app
-      #  to check them with ruff.
-      - "src/**"
-      # - "sandbox/**"
-      # - "scripts/**"
-      - "tests/**"
-      # - "migrations/**"
-      # - "alembic/**"
-      # - "packages/**"
-      # - "libs/**"
-      # - "applications/**"
+    ## Run only when changes detected in specified paths
+    # paths:
+      ## Changes in a src/ directory
+      # - "src/**"
+      ## Changes in a sandbox/ directory
       ## Any Python file in the root directory (non-recursive)
-      - "*.py"
+      # - "./*.py"
+    ## Ignore changes in specified paths, don't trigger pipeline
     paths-ignore:
-      ## Ignore patterns, don't lint with ruff
-      - ".venv/**"
-      - ".nox/**"
-      - ".ruff/**"
+      ## Ignore changes in a tests/ directory
+      - "tests/*"
+      ## Ignore changes to any Jupyter notebooks
+      - "*.ipynb"
+      ## Ignore changes in a migrations or alembic directory
+      - "migrations/*"
+      - "alembic/*"
+      ## Ignore changes in a docs/ directory
+      - "docs/*"
 
 jobs:
   lint:
@@ -38,13 +37,16 @@ jobs:
 
     steps:
       ## Checkout repository
-      - uses: actions/checkout@v4
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
 
       ## Install Python in container
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
       ## Install uv in container
       - name: Install uv
@@ -61,13 +63,4 @@ jobs:
       ## Check with ruff
       - name: Run Ruff checks & fix errors
         run: |
-          ruff check src/
-          ruff check sandbox/
-          ruff check scripts/
-          ruff check tests/
-          ruff check migrations/
-          ruff check alembic/
-          ruff check packages/
-          ruff check libs/
-          ruff check applications/
-          ruff check ./*.py
+          ruff check src/ sandbox/ scripts/ tests/ migrations/ alembic/ packages/ libs/ applications/ ./*.py --fix
