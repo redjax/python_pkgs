@@ -1,0 +1,88 @@
+---
+## Lint code with ruff
+name: Code Quality Check
+
+on:
+  ## Make this an on-demand Action
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+    ## Run only when changes detected in specified paths
+    # paths:
+      ## Changes in a src/ directory
+      # - "src/**"
+      ## Changes in a sandbox/ directory
+      ## Any Python file in the root directory (non-recursive)
+      # - "./*.py"
+    ## Ignore changes in specified paths, don't trigger pipeline
+    paths-ignore:
+      ## Ignore changes in a tests/ directory
+      - "tests/*"
+      ## Ignore changes to any Jupyter notebooks
+      - "*.ipynb"
+      ## Ignore changes in a docs/ directory
+      - "docs/*"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      ## Checkout repository
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      ## Install Python in container
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      ## Install uv in container
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+
+      ## Setup venv, install dependencies
+      - name: Create virtual environment and install dependencies
+        run: |
+          uv venv
+          uv pip install ruff
+
+      ## Check with ruff
+      - name: Run Ruff checks & fix errors
+        ## Note: paths must exist or ruff will throw an error. Remove any directories you do not use in your project.
+        run: |
+          uv run ruff check libs/ sandbox/ scripts/ tests/ ./noxfile.py --fix
+
+      ## Import re-usable workflow from commit-changes.yml
+      #  Commits changes back to branch for pull request
+      # - name: Commit changes back to branch
+      #   uses: ./.github/workflows/commit-changes.yml
+      #   with:
+      #     commit_message: "Apply lint fixes via Ruff"
+
+      ## Use the code below if you did not create an on-deman commit-changes.yml workflow
+      ## Commit changes back to branch
+      - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet; then
+            echo "Changes detected. Committing..."
+            git add .
+            git commit -m "Apply lint fixes via Ruff"
+            git push origin HEAD:${{ github.event.pull_request.head.ref }}
+          else
+            echo "No changes detected. Skipping commmit."
+          fi
