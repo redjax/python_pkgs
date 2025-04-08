@@ -64,8 +64,8 @@ jobs:
           if ! git diff --quiet; then
             echo "Changes detected. Committing..."
             git add requirements.txt requirements.dev.txt
-            git commit -m "${{ github.event.inputs.commit_message }}"
-            git push origin HEAD:${{ github.ref_name }}
+            git commit -m "${{ github.event.inputs.commit_message || 'chore: update requirements' }}"
+            git push origin HEAD:${{ github.ref_name || chore/bump-depends }}
           else
             echo "No changes detected. Skipping commit."
           fi
@@ -75,7 +75,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           branch: chore/bump-depends
-          commit-message: "${{ github.event.inputs.commit_message }}"
-          title: "${{ github.event.inputs.commit_title }}"
-          body: "${{ github.event.inputs.commit_body }}"
+          commit-message: "${{ github.event.inputs.commit_message || 'chore: update requirements' }}"
+          title: "${{ github.event.inputs.commit_title || 'Update requirements*.txt files' }}"
+          body: "${{ github.event.inputs.commit_body 'Export production & dev requirements' }}"
           base: main
