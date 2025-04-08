@@ -1,0 +1,45 @@
+---
+## Workflow to build MkDocs site & deploy to Github pages
+name: Build & Deploy MkDocs site
+
+on:
+  ## Uncomment to trigger on PRs to main with a specific label
+  # pull_request:
+  #   branches:
+  #     - main
+  #   types: [ labeled ]
+
+  ## Uncomment to make the pipeline an on-demand workflow
+  workflow_dispatch:
+    inputs:
+      requirements_file:
+        required: false
+        type: string
+        default: requirements.txt
+
+  ## Uncomment to allow other pipelines to trigger this one
+  workflow_call:
+    inputs:
+      requirements_file:
+        required: false
+        type: string
+        default: requirements.txt
+
+jobs:
+  deploy-mkdocs:
+    name: Deploy to Github Pages
+    ## Run if PR has the publish label
+    if: ${{ github.event.label.name == 'publish' }}
+    runs-on: ubuntu-latest
+  
+    steps:
+      ## Checkout code in pipeline
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      ## Build & deploy MkDocs site
+      - name: Deploy MkDocs
+        uses: mhausenblas/mkdocs-deploy-gh-pages@1.26
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REQUIREMENTS: ${{ github.event.inputs.requirements_file || 'requirements.txt' }}
