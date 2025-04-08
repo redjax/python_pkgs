@@ -62,5 +62,6 @@ jobs:
 
       ## Check with ruff
       - name: Run Ruff checks & fix errors
+        ## Note: paths must exist or ruff will throw an error. Remove any directories you do not use in your project.
         run: |
           ruff check src/ sandbox/ scripts/ tests/ migrations/ alembic/ packages/ libs/ applications/ ./*.py --fix
