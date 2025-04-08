@@ -53,6 +53,7 @@ jobs:
       ## Setup venv, install dependencies
       - name: Create virtual environment and install dependencies
         run: |
+          uv venv
           uv pip install ruff
 
       ## Check with ruff
