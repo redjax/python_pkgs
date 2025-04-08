@@ -12,6 +12,7 @@ on:
     types:
       - opened
       - reopened
+      - synchronize
     paths:
       - "pyproject.toml"
       - "uv.lock"

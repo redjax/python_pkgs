@@ -11,6 +11,7 @@ on:
     types:
       - opened
       - reopened
+      - synchronize
     ## Run only when changes detected in specified paths
     # paths:
       ## Changes in a src/ directory
