@@ -6,7 +6,12 @@
 name: Code Quality Check
 
 on:
-  push:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
     paths:
       ## Uncomment path patterns appropriate for your app
       #  to check them with ruff.
