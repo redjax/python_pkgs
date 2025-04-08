@@ -171,13 +171,13 @@ def export_requirements(session: nox.Session, requirements_output_dir: Path):
         str(REQUIREMENTS_OUTPUT_DIR / "requirements.txt"),
     )
 
-    log.info("Exporting development requirements
+    log.info("Exporting development requirements")
     session.run(
         "uv",
         "export",
         "--only-dev",
         "--no-hashes",
-        str(REQUIREMENTS_OUTPUT_DIR / "requirements.dev.txt"
+        str(REQUIREMENTS_OUTPUT_DIR / "requirements.dev.txt"),
     )
 
 
