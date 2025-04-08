@@ -60,14 +60,13 @@ jobs:
       ## Setup venv, install dependencies
       - name: Create virtual environment and install dependencies
         run: |
-          uv sync
           uv pip install ruff
 
       ## Check with ruff
       - name: Run Ruff checks & fix errors
         ## Note: paths must exist or ruff will throw an error. Remove any directories you do not use in your project.
         run: |
-          ruff check src/ sandbox/ scripts/ tests/ migrations/ alembic/ packages/ libs/ applications/ ./*.py --fix
+          uv run ruff check src/ sandbox/ scripts/ tests/ migrations/ alembic/ packages/ libs/ applications/ ./*.py --fix
 
       ## Import re-usable workflow from commit-changes.yml
       #  Commits changes back to branch for pull request
