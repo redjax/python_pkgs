@@ -1,3 +1,4 @@
+---
 ## Github Action to upgrade all packages with uv
 name: Upgrade uv packages
 on:
