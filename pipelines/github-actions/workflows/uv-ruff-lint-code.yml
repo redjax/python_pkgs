@@ -1,8 +1,4 @@
 ---
-###########################################################
-# WARNING: This is untested until this comment is removed #
-###########################################################
-
 ## Lint code with ruff
 name: Code Quality Check
 
@@ -29,9 +25,6 @@ on:
       - "tests/*"
       ## Ignore changes to any Jupyter notebooks
       - "*.ipynb"
-      ## Ignore changes in a migrations or alembic directory
-      - "migrations/*"
-      - "alembic/*"
       ## Ignore changes in a docs/ directory
       - "docs/*"
 
@@ -61,13 +54,14 @@ jobs:
       ## Setup venv, install dependencies
       - name: Create virtual environment and install dependencies
         run: |
+          uv venv
           uv pip install ruff
 
       ## Check with ruff
       - name: Run Ruff checks & fix errors
         ## Note: paths must exist or ruff will throw an error. Remove any directories you do not use in your project.
         run: |
-          uv run ruff check src/ sandbox/ scripts/ tests/ migrations/ alembic/ packages/ libs/ applications/ ./*.py --fix
+          uv run ruff check libs/ sandbox/ scripts/ tests/ ./noxfile.py --fix
 
       ## Import re-usable workflow from commit-changes.yml
       #  Commits changes back to branch for pull request

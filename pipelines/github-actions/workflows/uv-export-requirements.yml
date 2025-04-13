@@ -4,23 +4,31 @@
 name: Uv export requirements
 
 on:
-  ## Uncomment to make this an on-demand workflow
   workflow_dispatch:
-
-  ## Uncomment to trigger from another pipeline
-  # workflow_call:
-  #   inputs:
-  #     commit_message:
-  #       description: "Commit message for updated requirements"
-  #       required: false
-  #       default: "chore: update requirements"
-
-  ## Uncomment to trigger on changes to pyproject.toml or uv.lock
+    inputs:
+      commit_message:
+        description: "Commit message for updated requirements"
+        required: false
+        default: "chore: export requirements"
+      commit_title:
+        description: "Pull request title"
+        required: false
+        default: "Export requirements*.txt"
+      commit_body:
+        description: "Pull request body"
+        required: false
+        default: "Export production & development requirements"
   # pull_request:
+  #   branches:
+  #     - main
+  #   types:
+  #     - opened
+  #     - reopened
+  #     - synchronize
   #   paths:
   #     - "pyproject.toml"
   #     - "uv.lock"
-
+    
 jobs:
   export-and-commit:
     runs-on: ubuntu-latest
@@ -41,29 +49,36 @@ jobs:
           uv export --no-hashes --only-dev -o requirements.dev.txt
 
       ## Call re-usable workflow to commit changes
-      - name: Commit changes back to branch
-        uses: ./.github/workflows/commit-changes.yml
-        with:
-          commit_message: "${{ github.event.inputs.commit_message || 'chore: update requirements' }}"
+      # - name: Commit changes back to branch
+      #   uses: ./.github/workflows/commit-changes.yml
+      #   with:
+      #     commit_message: "${{ github.event.inputs.commit_message || 'chore: update requirements' }}"
 
-      ## Uncomment if you don't have a commit-changes workflow to call
-      # - name: Commit and push changes
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   run: |
-      #     git config user.name "github-actions[bot]"
-      #     git config user.email "github-actions[bot]@users.noreply.github.com"
-      #     git add requirements.txt requirements.dev.txt
-      #     git commit -m "${{ github.event.inputs.commit_message }}"
-      #     git push origin HEAD:${{ github.event.pull_request.head.ref || github.ref_name }}"
+      ## Commit and push changes
+      - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet; then
+            echo "Changes detected. Committing..."
+            git add requirements.txt requirements.dev.txt
 
-      ## Uncomment if running on demand.
+            COMMIT_MESSAGE="${{ github.event.inputs.commit_message || 'chore: export requirements' }}"
+            git commit -m "$COMMIT_MESSAGE"
+
+            git push origin HEAD:${{ github.ref_name }}
+          else
+            echo "No changes detected. Skipping commit."
+          fi
+
       ## Open new PR to main
       - name: Create PR for dependency updates
         uses: peter-evans/create-pull-request@v5
         with:
           branch: chore/bump-depends
-          commit-message: "${{ inputs.commit_message || 'chore: export requirements' }}"
-          title: "${{ inputs.commit_title || 'Export production & dev requirements*.txt' }}"
-          body: "${{ inputs.commit_body || 'Export requirements' }}"
+          commit-message: "${{ github.event.inputs.commit_message || 'chore: export requirements' }}"
+          title: "${{ github.event.inputs.commit_title || 'Update requirements*.txt files' }}"
+          body: "${{ github.event.inputs.commit_body || 'Export production & dev requirements' }}"
           base: main
