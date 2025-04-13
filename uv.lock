@@ -6,7 +6,6 @@ requires-python = ">=3.12"
 members = [
     "coreutils-lib",
     "database-lib",
-    "depends-lib",
     "http-lib",
     "pandas-lib",
     "python-pkgs",
@@ -178,11 +177,6 @@ sdist = { url = "https://files.pythonhosted.org/packages/b4/57/cd53c3e335eafbb08
 wheels = [
     { url = "https://files.pythonhosted.org/packages/99/2c/3e3afb1df3dc8a8deeb143f6ac41acbfdfae4f03a54c760871c56832a554/dependency_groups-1.3.0-py3-none-any.whl", hash = "sha256:1abf34d712deda5581e80d507512664d52b35d1c2d7caf16c85e58ca508547e0", size = 8597 },
 ]
-
-[[package]]
-name = "depends-lib"
-version = "0.1.0"
-source = { editable = "libs/depends-lib" }
 
 [[package]]
 name = "distlib"
@@ -690,7 +684,6 @@ source = { editable = "." }
 dependencies = [
     { name = "coreutils-lib" },
     { name = "database-lib" },
-    { name = "depends-lib" },
     { name = "http-lib" },
     { name = "loguru" },
     { name = "pandas-lib" },
@@ -711,7 +704,6 @@ dev = [
 requires-dist = [
     { name = "coreutils-lib", editable = "libs/coreutils-lib" },
     { name = "database-lib", editable = "libs/database-lib" },
-    { name = "depends-lib", editable = "libs/depends-lib" },
     { name = "http-lib", editable = "libs/http-lib" },
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "pandas-lib", editable = "libs/pandas-lib" },
