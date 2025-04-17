@@ -14,7 +14,7 @@ on:
       release_body:
         description: 'Release description'
         required: false
-        default: 'Automated release of my-library.zip.'
+        default: 'Automated .zip releases for libs/ packages.'
 
 jobs:
   build:
