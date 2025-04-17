@@ -1,5 +1,8 @@
 name: On-Demand Zip Release
 
+permissions:
+  contents: write
+
 on:
   workflow_dispatch:
     inputs:
@@ -31,6 +34,16 @@ jobs:
             d=$(basename "$dir")
             zip -r "zips/${d}.zip" "$dir"
           done
+
+      - name: Create tag if it does not exist
+        run: |
+          git fetch --tags
+          if ! git rev-parse "refs/tags/${{ github.event.inputs.release_tag }}" >/dev/null 2>&1; then
+            git config user.name "github-actions"
+            git config user.email "github-actions@github.com"
+            git tag ${{ github.event.inputs.release_tag }}
+            git push origin ${{ github.event.inputs.release_tag }}
+          fi
 
       - name: Create Release
         id: create_release
