@@ -35,6 +35,9 @@ jobs:
             zip -r "zips/${d}.zip" "$dir"
           done
 
+      - name: List zip files
+        run: ls -lh zips/
+
       - name: Create tag if it does not exist
         run: |
           git fetch --tags
@@ -45,21 +48,12 @@ jobs:
             git push origin ${{ github.event.inputs.release_tag }}
           fi
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.event.inputs.release_tag }}
-          release_name: ${{ github.event.inputs.release_name }}
-          body: ${{ github.event.inputs.release_body }}
-          draft: false
-          prerelease: false
-
-      - name: Upload all zip files as release assets
+      - name: Create Release & Upload zips
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.event.inputs.release_tag }}
+          name: ${{ github.event.inputs.release_name }}
+          body: ${{ github.event.inputs.release_body }}
           files: zips/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
