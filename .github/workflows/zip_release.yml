@@ -1,5 +1,8 @@
 name: On-Demand Zip Release
 
+permissions:
+  contents: write
+
 on:
   workflow_dispatch:
     inputs:
@@ -32,21 +35,25 @@ jobs:
             zip -r "zips/${d}.zip" "$dir"
           done
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.event.inputs.release_tag }}
-          release_name: ${{ github.event.inputs.release_name }}
-          body: ${{ github.event.inputs.release_body }}
-          draft: false
-          prerelease: false
+      - name: List zip files
+        run: ls -lh zips/
 
-      - name: Upload all zip files as release assets
+      - name: Create tag if it does not exist
+        run: |
+          git fetch --tags
+          if ! git rev-parse "refs/tags/${{ github.event.inputs.release_tag }}" >/dev/null 2>&1; then
+            git config user.name "github-actions"
+            git config user.email "github-actions@github.com"
+            git tag ${{ github.event.inputs.release_tag }}
+            git push origin ${{ github.event.inputs.release_tag }}
+          fi
+
+      - name: Create Release & Upload zips
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.event.inputs.release_tag }}
+          name: ${{ github.event.inputs.release_name }}
+          body: ${{ github.event.inputs.release_body }}
           files: zips/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
