@@ -8,6 +8,7 @@ members = [
     "database-lib",
     "http-lib",
     "pandas-lib",
+    "platform-lib",
     "python-pkgs",
     "settings-lib",
     "setup-lib",
@@ -552,6 +553,11 @@ requires-dist = [
 ]
 
 [[package]]
+name = "platform-lib"
+version = "0.1.0"
+source = { editable = "libs/platform-lib" }
+
+[[package]]
 name = "platformdirs"
 version = "4.3.7"
 source = { registry = "https://pypi.org/simple" }
@@ -687,6 +693,7 @@ dependencies = [
     { name = "http-lib" },
     { name = "loguru" },
     { name = "pandas-lib" },
+    { name = "platform-lib" },
     { name = "settings-lib" },
     { name = "setup-lib" },
     { name = "time-utils" },
@@ -707,6 +714,7 @@ requires-dist = [
     { name = "http-lib", editable = "libs/http-lib" },
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "pandas-lib", editable = "libs/pandas-lib" },
+    { name = "platform-lib", editable = "libs/platform-lib" },
     { name = "settings-lib", editable = "libs/settings-lib" },
     { name = "setup-lib", editable = "libs/setup-lib" },
     { name = "time-utils", editable = "libs/time-utils" },

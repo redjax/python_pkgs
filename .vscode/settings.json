@@ -5,6 +5,7 @@
         "./libs/depends-lib/src",
         "./libs/http-lib/src",
         "./libs/pandas-lib/src",
+        "./libs/platform-lib/src",
         "./libs/settings-lib/src",
         "./libs/setup-lib/src",
         "./libs/time-utils/src"
