@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from platform_lib import script as platform_script
 
 if __name__ == "__main__":
