@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 
 from platform_lib.helpers import _set_logging_level, parse_args
