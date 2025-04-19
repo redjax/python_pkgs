@@ -1,7 +1,8 @@
+from __future__ import annotations
+
 import argparse
 
 from platform_lib.classes.platform import PlatformInfo, get_platform_info
-
 
 def main(options: argparse.Namespace):
     platform_info: PlatformInfo = get_platform_info()

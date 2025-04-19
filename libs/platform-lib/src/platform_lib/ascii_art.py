@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 __all__ = ["mac_ascii", "win_ascii", "linux_ascii", "bsd_ascii", "other_ascii"]
 
 mac_ascii: str = f"""

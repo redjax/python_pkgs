@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 __all__ = ["VALID_FILESIZE_UNITS"]
 
 ## Valid file size strings for byte conversions

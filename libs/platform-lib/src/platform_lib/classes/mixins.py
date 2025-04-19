@@ -1,8 +1,9 @@
-import typing as t
+from __future__ import annotations
+
 from dataclasses import dataclass
+import typing as t
 
 from platform_lib.types import T
-
 
 __all__ = ["DictMixin"]
 

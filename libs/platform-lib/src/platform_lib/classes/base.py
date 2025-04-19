@@ -1,18 +1,20 @@
+from __future__ import annotations
+
 from dataclasses import dataclass, field
 import platform as _platform
-import typing as t
 import sys
 from types import ModuleType
+import typing as t
 
 from platform_lib.classes.mixins import DictMixin
 from platform_lib.enums._enums import EnumSystemTypes
 from platform_lib.helpers import (
-    get_python_path,
-    get_python_modules,
+    get_cpu_count,
     get_libc_version,
     get_platform_aliased,
     get_platform_terse,
-    get_cpu_count,
+    get_python_modules,
+    get_python_path,
     get_sys_byteorder,
 )
 

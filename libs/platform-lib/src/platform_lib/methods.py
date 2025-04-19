@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 
 from platform_lib import ascii_art

@@ -1,11 +1,13 @@
-import logging
+from __future__ import annotations
+
 import argparse
-import typing as t
 from decimal import Decimal
+import logging
 import multiprocessing
 import platform as _platform
-from types import ModuleType
 import sys
+from types import ModuleType
+import typing as t
 
 from platform_lib.classes.converted_bytes import ConvertedBytes
 from platform_lib.constants import VALID_FILESIZE_UNITS

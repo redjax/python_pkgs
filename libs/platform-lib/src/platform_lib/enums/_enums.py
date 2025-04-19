@@ -1,6 +1,8 @@
-import typing as t
+from __future__ import annotations
+
 from enum import Enum
 import platform as _platform
+import typing as t
 
 __all__ = ["EnumSystemTypes", "EnumMac", "EnumWin32", "EnumUnix"]
 

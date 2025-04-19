@@ -1,16 +1,18 @@
-import typing as t
+from __future__ import annotations
+
 from dataclasses import dataclass, field
 import logging
+import typing as t
 
-from platform_lib.enums._enums import EnumWin32, EnumSystemTypes
-from platform_lib.classes.spinners import CLISpinner
 from platform_lib.classes.base import (
     PlatformInfoBase,
     PlatformPythonBase,
-    PlatformUnameBase,
     PlatformSpecificInfoBase,
+    PlatformUnameBase,
     PlatformUnixInfoBase,
 )
+from platform_lib.classes.spinners import CLISpinner
+from platform_lib.enums._enums import EnumSystemTypes, EnumWin32
 from platform_lib.helpers import get_os_release
 from platform_lib.methods import get_os_ascii
 

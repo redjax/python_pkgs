@@ -1,8 +1,10 @@
-import threading
+from __future__ import annotations
+
 from contextlib import AbstractContextManager
-import sys
-import time
 import itertools
+import sys
+import threading
+import time
 
 __all__ = ["CLISpinner"]
 

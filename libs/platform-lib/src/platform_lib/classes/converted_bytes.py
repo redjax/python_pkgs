@@ -1,6 +1,8 @@
-import typing as t
+from __future__ import annotations
+
 from dataclasses import dataclass, field
 from decimal import Decimal
+import typing as t
 
 from platform_lib.constants import VALID_FILESIZE_UNITS
 
