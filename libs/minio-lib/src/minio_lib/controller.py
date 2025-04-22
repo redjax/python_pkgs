@@ -13,7 +13,6 @@ import logging
 import os
 from pathlib import Path
 import typing as t
-import json
 
 from minio import Minio
 from minio.commonconfig import CopySource
@@ -25,8 +24,6 @@ log = logging.getLogger(__name__)
 __all__ = [
     "MinioController",
     "get_minio_controller",
-    "generate_default_configs",
-    "load_minio_job",
     "MinioSettings",
     "MinioJob",
     "MinioUploadJob",
@@ -48,6 +45,8 @@ class MinioSettings:
 
 @dataclass
 class MinioJob:
+    """Base class for all Minio jobs."""
+
     type: str
     bucket: str
 
@@ -103,7 +102,7 @@ class MinioConfigGenerator:
 
     def generate(self):
         """Generates the MinIO config JSON file if it doesn't exist."""
-        if not os.path.exists(self.output_path) or not os.path.isfile(self.output_path):
+        if not Path(self.output_path).exists() or not Path(self.output_path).is_file():
             with open(self.output_path, "w") as f:
                 json.dump(self.default_config, f, indent=4)
             self.logger.info(f"Generated default MinIO config at {self.output_path}")
@@ -122,7 +121,7 @@ class MinioJobConfigGenerator:
 
     def generate(self):
         """Generates the job config JSON file if it doesn't exist."""
-        if not os.path.exists(self.output_path) or not os.path.isfile(self.output_path):
+        if not Path(self.output_path).exists() or not Path(self.output_path).is_file():
             with open(self.output_path, "w") as f:
                 json.dump(self.default_config, f, indent=4)
             self.logger.info(
