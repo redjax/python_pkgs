@@ -4,6 +4,7 @@
         "./libs/database-lib/src",
         "./libs/depends-lib/src",
         "./libs/http-lib/src",
+        "./libs/minio-lib/src",
         "./libs/pandas-lib/src",
         "./libs/platform-lib/src",
         "./libs/settings-lib/src",
