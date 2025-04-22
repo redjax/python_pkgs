@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 from minio_lib.controller import (
-    get_minio_controller,
-    generate_default_configs,
     MinioController,
+    generate_default_configs,
+    get_minio_controller,
 )
 
 if __name__ == "__main__":
