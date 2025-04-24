@@ -20,17 +20,18 @@ Example:
 
 """
 
-import pymysql
-import subprocess
-import shutil
-from dataclasses import dataclass, field
 import argparse
-from pathlib import Path
-import logging
-import typing as t
+from dataclasses import dataclass, field
 import datetime as dt
-import os
 import json
+import logging
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import typing as t
+
+import pymysql
 
 log = logging.getLogger(__name__)
 
