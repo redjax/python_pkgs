@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # /// script
 # requires-python = ">=3.12"
 # dependencies = [
@@ -79,7 +81,7 @@ def parse_args():
 
 
 def check_mysqldump_installed() -> bool:
-    """Verify mysqldump installation"""
+    """Verify mysqldump installation."""
     log.info("Checking mysqldump installation")
 
     ## Test if mysqldump is installed
@@ -105,6 +107,7 @@ def get_default_backup_filename(db_name: str | None = None):
 
     Returns:
         str: The default backup filename
+
     """
     timestamp = dt.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
@@ -139,6 +142,7 @@ class DbSettings:
         password: MySQL database password
         database: MySQL database name
         backup_file: File to save backup to
+
     """
 
     host: str = field(default="localhost")
@@ -157,6 +161,7 @@ class DatabaseBackupController:
         logger: logging.Logger
         db_settings: DbSettings
         _connection: pymysql.Connection
+
     """
 
     def __init__(
@@ -180,6 +185,7 @@ class DatabaseBackupController:
 
         Returns:
             DbSettings
+
         """
         merged = self._merge_settings(self.args, settings or {})
 
@@ -192,10 +198,13 @@ class DatabaseBackupController:
     def _merge_settings(
         self, args: argparse.Namespace = None, user_settings: dict = None
     ) -> dict:
-        """Merge settings from different sources with priority:
-        1. Command-line arguments
-        2. User-provided settings
-        3. settings.py defaults
+        """Merge settings from different sources.
+
+        Description:
+            Config load priority:
+            1. Command-line arguments
+            2. User-provided settings
+            3. settings.py defaults
 
         Params:
             args (argparse.Namespace): Command-line arguments
@@ -203,6 +212,7 @@ class DatabaseBackupController:
 
         Returns:
             dict
+
         """
         user_settings = user_settings or {}
 
