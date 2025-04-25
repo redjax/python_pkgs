@@ -351,7 +351,7 @@ class DatabaseBackupController:
         ## Do backup
         self.logger.info(f"Starting backup to {self.db_settings.backup_file}")
         try:
-            # Need to set PGPASSWORD environment variable for password authentication
+            ## Need to set PGPASSWORD environment variable for password authentication
             env = os.environ.copy()
             env["PGPASSWORD"] = self.db_settings.password
             subprocess.run(cmd, shell=True, check=True, env=env)
@@ -417,8 +417,7 @@ def start_cli():
     logging.basicConfig(level=log_level.upper(), format=fmt, datefmt=datefmt)
     log.debug("DEBUG logging enabled")
 
-    ## If --generate-config-file was passed, save the default JSON file
-    #  & exit
+    ## If --generate-config-file was passed, save the default JSON file & exit
     if args.generate_config_file:
         save_default_config_json()
         exit(0)
