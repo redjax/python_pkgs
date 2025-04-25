@@ -33,17 +33,17 @@ Example:
 """
 
 import argparse
+from dataclasses import dataclass, field
 import datetime as dt
 import json
 import logging
 import os
+from pathlib import Path
+import shutil
 import subprocess
 import typing as t
-from dataclasses import dataclass, field
-from pathlib import Path
-import psycopg2
-import shutil
 
+import psycopg2
 
 log = logging.getLogger(__name__)
 
