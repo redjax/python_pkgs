@@ -4,11 +4,7 @@ import logging
 
 log = logging.getLogger()
 
-import datetime
-from datetime import (
-    datetime as dt,
-    timedelta,
-)
+import datetime as dt
 import time
 from typing import Union
 
@@ -54,7 +50,7 @@ def datetime_as_dt(ts: str = None, format: str = TIME_FMT_24H) -> dt:
     return _ts
 
 
-def get_ts(as_str: bool = False, format: str = TIME_FMT_24H) -> Union[dt, str]:
+def get_ts(as_str: bool = False, format: str = TIME_FMT_24H) -> Union[dt.datetime, str]:
     """Get a timestamp object.
 
     Params:
@@ -72,6 +68,23 @@ def get_ts(as_str: bool = False, format: str = TIME_FMT_24H) -> Union[dt, str]:
         now: str = datetime_as_str(ts=now, format=format)
 
     return now
+
+
+def get_next_full_hour(now: dt.datetime | None = None) -> dt.datetime:
+    """Return the next full hour datetime after `now`. If `now` is None, uses current time.
+
+    Examples:
+        1:30  -> 2:00
+        8:16  -> 9:00
+        23:59 -> next day 00:00
+    """
+    if now is None:
+        now = dt.datetime.now()
+
+    ## Replace minutes, seconds, microseconds with zero
+    next_hour = now.replace(minute=0, second=0, microsecond=0) + dt.timedelta(hours=1)
+
+    return next_hour
 
 
 def wait(s: int = 1, msg: str | None = "Waiting {} seconds...") -> None:
