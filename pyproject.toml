@@ -8,6 +8,7 @@ dependencies = [
     "coreutils-lib",
     "database-lib",
     "http-lib",
+    "httpx-lib",
     "loguru>=0.7.3",
     "pandas-lib",
     "platform-lib",
@@ -46,6 +47,7 @@ settings-lib = { workspace = true }
 setup-lib = { workspace = true }
 time-utils = { workspace = true }
 platform-lib = { workspace = true }
+httpx-lib = { workspace = true }
 
 [dependency-groups]
 dev = ["alembic>=1.14.1", "nox>=2025.2.9", "pytest-xdist>=3.6.1", "ruff>=0.9.5"]
