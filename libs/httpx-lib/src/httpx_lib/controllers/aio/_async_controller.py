@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from ._async_base import AsyncHttpxControllerBase
 
 __all__ = ["AsyncHttpxController"]

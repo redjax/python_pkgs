@@ -1,10 +1,11 @@
-import typing as t
+from __future__ import annotations
+
 import logging
 from pathlib import Path
+import typing as t
 
-import httpx
 import hishel
-
+import httpx
 
 class AsyncHttpxControllerBase:
     def __init__(
