@@ -77,6 +77,7 @@ def get_next_full_hour(now: dt.datetime | None = None) -> dt.datetime:
         1:30  -> 2:00
         8:16  -> 9:00
         23:59 -> next day 00:00
+
     """
     if now is None:
         now = dt.datetime.now()
