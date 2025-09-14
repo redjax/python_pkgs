@@ -177,6 +177,7 @@ def export_requirements(session: nox.Session, requirements_output_dir: Path):
         "export",
         "--only-dev",
         "--no-hashes",
+        "-o",
         str(REQUIREMENTS_OUTPUT_DIR / "requirements.dev.txt"),
     )
 
