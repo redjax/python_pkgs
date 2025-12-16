@@ -52,7 +52,7 @@ execnet==2.1.1
     # via pytest-xdist
 fastparquet==2024.11.0
     # via coreutils-lib
-filelock==3.18.0
+filelock==3.20.1
     # via virtualenv
 fsspec==2025.3.2
     # via fastparquet
