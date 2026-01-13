@@ -137,7 +137,7 @@ typing-extensions==4.13.2
     #   sqlalchemy
 tzdata==2025.2
     # via pandas
-virtualenv==20.30.0
+virtualenv==20.36.1
     # via nox
 win32-setctime==1.2.0 ; sys_platform == 'win32'
     # via loguru
