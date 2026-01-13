@@ -47,5 +47,5 @@ typing-extensions==4.13.2
     # via
     #   alembic
     #   sqlalchemy
-virtualenv==20.30.0
+virtualenv==20.36.1
     # via nox
